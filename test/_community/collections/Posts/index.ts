@@ -7,18 +7,32 @@ export const postsSlug = 'posts'
 export const PostsCollection: CollectionConfig = {
   fields: [
     {
+      name: 'name',
+      type: 'text',
+      required: true,
+    },
+    {
       name: 'text',
       type: 'text',
     },
     {
-      name: 'associatedMedia',
-      access: {
-        create: () => true,
-        update: () => false,
-      },
-      relationTo: mediaSlug,
-      type: 'upload',
+      name: 'category',
+      type: 'relationship',
+      relationTo: 'categories',
+      admin: {
+        sortOptions: '-updatedAt',
+      }
+    },
+    {
+      name: 'tag',
+      type: 'relationship',
+      relationTo: 'tags',
     },
   ],
   slug: postsSlug,
+  defaultSort: 'createdAt',
+  admin: {
+    useAsTitle: 'name',
+    defaultColumns: ['name', 'createdAt', 'category', 'tag'],
+  }
 }
